@@ -1,10 +1,12 @@
 pragma solidity ^0.4.16;
 
-interface token {
+interface token 
+{
     function transfer(address receiver, uint amount);
 }
 
-contract MoonFundingRound3 {
+contract MoonFundingRound3 
+{
     address public beneficiary;
     uint public fundingGoal;
     uint public amountRaised;
@@ -23,25 +25,22 @@ contract MoonFundingRound3 {
      *
      * Setup the owner
      */
-    function MoonFundingRound3(
+    function MoonFundingRound3
+    (
         address ifSuccessfulSendTo,
         uint fundingGoalInEthers,
         uint durationInMinutes,
         uint etherCostOfEachToken,
         address addressOfTokenUsedAsReward
-    ) {
+    ) 
+    {
         beneficiary = ifSuccessfulSendTo;
         fundingGoal = fundingGoalInEthers;
         deadline = now + durationInMinutes * 1 minutes;
         price = etherCostOfEachToken;
         tokenReward = token(addressOfTokenUsedAsReward);
     }
-
-    /**
-     * Fallback function
-     *
-     * The function without name is the default function that is called whenever anyone sends funds to a contract
-     */
+    
     function () payable {
         require(!crowdsaleClosed);
         uint amount = msg.value;
@@ -53,35 +52,33 @@ contract MoonFundingRound3 {
 
     modifier afterDeadline() { if (now >= deadline) _; }
 
-    /**
-     * Check if goal was reached
-     *
-     * Checks if the goal or time limit has been reached and ends the campaign
-     */
-    function checkGoalReached() afterDeadline {
-        if (amountRaised >= fundingGoal*1/10){
+    //Checks if the goal or time limit has been reached and ends the campaign
+    function checkGoalReached() afterDeadline 
+    {
+        if (amountRaised >= fundingGoal*1/10)
+        {
             fundingGoalReached = true;
             GoalReached(beneficiary, amountRaised);
         }
         crowdsaleClosed = true;
     }
 
-
-    /**
-     * Withdraw the funds
-     *
-     * Checks to see if goal or time limit has been reached, and if so, and the funding goal was reached,
-     * sends the entire amount to the beneficiary. If goal was not reached, each contributor can withdraw
-     * the amount they contributed.
-     */
-    function safeWithdrawal() afterDeadline {
-        if (!fundingGoalReached) {
+     //If time limit and funding goal have been reached, it sends the entire amount to MoonFunding's wallet. 
+     //If goal was not reached, each contributor can withdraw their amount (Refund)
+    function safeWithdrawal() afterDeadline 
+    {
+        if (!fundingGoalReached) 
+        {
             uint amount = balanceOf[msg.sender];
             balanceOf[msg.sender] = 0;
-            if (amount > 0) {
-                if (msg.sender.send(amount)) {
+            if (amount > 0) 
+            {
+                if (msg.sender.send(amount)) 
+                {
                     FundTransfer(msg.sender, amount, false);
-                } else {
+                }
+                else 
+                {
                     balanceOf[msg.sender] = amount;
                 }
             }
@@ -90,10 +87,7 @@ contract MoonFundingRound3 {
         if (fundingGoalReached && beneficiary == msg.sender) {
             if (beneficiary.send(amountRaised)) {
                 FundTransfer(beneficiary, amountRaised, false);
-            } else {
-                //If we fail to send the funds to beneficiary, unlock funders balance
-                fundingGoalReached = false;
-            }
+            } 
         }
     }
 }
