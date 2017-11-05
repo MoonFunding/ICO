@@ -50,7 +50,7 @@ contract MoonFundingRound3
     //Checks if the goal or time limit has been reached and ends the campaign
     function checkGoalReached() afterDeadline 
     {
-        if (amountRaised >= fundingGoal*88/205)
+        if (amountRaised >= fundingGoal*88/205) // Soft cap is 42.92% of fundingGoal
         {
             fundingGoalReached = true;
             GoalReached(beneficiary, amountRaised);
