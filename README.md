@@ -1,1 +1,1 @@
-#ICO
+# Moon Funding's ICO
