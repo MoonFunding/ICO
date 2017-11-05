@@ -19,12 +19,7 @@ contract MoonFundingRound3
 
     event GoalReached(address recipient, uint totalAmountRaised);
     event FundTransfer(address backer, uint amount, bool isContribution);
-
-    /**
-     * Constrctor function
-     *
-     * Setup the owner
-     */
+   
     function MoonFundingRound3
     (
         address ifSuccessfulSendTo,
