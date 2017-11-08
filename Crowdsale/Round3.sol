@@ -78,7 +78,7 @@ contract MoonFundingRound3 {
             }
         }
 
-        if (fundingGoalReached && beneficiary == msg.sender) {
+        if (softCapReached && beneficiary == msg.sender) {
             if (beneficiary.send(amountRaised)) {
                 FundTransfer(beneficiary, amountRaised, false);
             } else {
