@@ -83,7 +83,7 @@ contract MoonFundingRound3 {
                 FundTransfer(beneficiary, amountRaised, false);
             } else {
                 //If we fail to send the funds to beneficiary, unlock investors balance
-                fundingGoalReached = false;
+                softCapReached = false;
             }
         }
     }
