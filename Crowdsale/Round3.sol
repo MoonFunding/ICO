@@ -82,7 +82,9 @@ contract MoonFundingRound3 {
         if (softCapReached && beneficiary == msg.sender) {
             if (beneficiary.send(amountRaised)) {
                 FundTransfer(beneficiary, amountRaised, false);
-            } else {
+            } 
+            else 
+            {
                 //If we fail to send the funds to beneficiary, unlock investors balance
                 softCapReached = false;
             }
