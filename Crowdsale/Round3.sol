@@ -1,42 +1,41 @@
 pragma solidity ^0.4.16;
 
-interface token 
-{
+interface token {
     function transfer(address receiver, uint amount);
 }
 
-contract MoonFundingRound3 
-{
+contract MoonFundingRound3 {
     address public beneficiary;
-    uint public fundingGoal;
+    uint public softCap;
     uint public amountRaised;
     uint public deadline;
     uint public price;
     token public tokenReward;
     mapping(address => uint256) public balanceOf;
-    bool fundingGoalReached = false;
+    bool softCapReached = false;
     bool crowdsaleClosed = false;
 
     event GoalReached(address recipient, uint totalAmountRaised);
     event FundTransfer(address backer, uint amount, bool isContribution);
-   
+    
     function MoonFundingRound3
     (
         address ifSuccessfulSendTo,
-        uint fundingGoalInEthers,
+        uint softCapInEthers,
         uint durationInMinutes,
         uint etherCostOfEachToken,
         address addressOfTokenUsedAsReward
     ) 
     {
         beneficiary = ifSuccessfulSendTo;
-        fundingGoal = fundingGoalInEthers;
+        softCap = softCapInEthers * 1 ether;
         deadline = now + durationInMinutes * 1 minutes;
         price = etherCostOfEachToken;
         tokenReward = token(addressOfTokenUsedAsReward);
     }
     
-    function () payable {
+    function () payable 
+    {
         require(!crowdsaleClosed);
         uint amount = msg.value;
         balanceOf[msg.sender] += amount;
@@ -47,33 +46,25 @@ contract MoonFundingRound3
 
     modifier afterDeadline() { if (now >= deadline) _; }
 
-    //Checks if the goal or time limit has been reached and ends the campaign
-    function checkGoalReached() afterDeadline 
-    {
-        if (amountRaised >= fundingGoal*88/205) // Soft cap is 42.92% of fundingGoal
-        {
-            fundingGoalReached = true;
+    function checkGoalReached() afterDeadline {
+        if (amountRaised >= softCap){
+            softCapReached = true;
             GoalReached(beneficiary, amountRaised);
         }
         crowdsaleClosed = true;
     }
 
-     //If time limit and funding goal have been reached, it sends the entire amount to MoonFunding's wallet. 
-     //If goal was not reached, each contributor can withdraw their amount (Refund)
-    function safeWithdrawal() afterDeadline 
-    {
-        if (!fundingGoalReached) 
-        {
+
+    //If soft cap and time limit have been reached, sends the funds to Moon Funding's wallet.
+    //If soft cap has not been reached, refund users.
+    function safeWithdrawal() afterDeadline {
+        if (!softCapReached) {
             uint amount = balanceOf[msg.sender];
             balanceOf[msg.sender] = 0;
-            if (amount > 0) 
-            {
-                if (msg.sender.send(amount)) 
-                {
+            if (amount > 0) {
+                if (msg.sender.send(amount)) {
                     FundTransfer(msg.sender, amount, false);
-                }
-                else 
-                {
+                } else {
                     balanceOf[msg.sender] = amount;
                 }
             }
@@ -82,7 +73,10 @@ contract MoonFundingRound3
         if (fundingGoalReached && beneficiary == msg.sender) {
             if (beneficiary.send(amountRaised)) {
                 FundTransfer(beneficiary, amountRaised, false);
-            } 
+            } else {
+                //If we fail to send the funds to beneficiary, unlock investors balance
+                fundingGoalReached = false;
+            }
         }
     }
 }
