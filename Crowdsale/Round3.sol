@@ -46,8 +46,10 @@ contract MoonFundingRound3 {
 
     modifier afterDeadline() { if (now >= deadline) _; }
 
-    function checkGoalReached() afterDeadline {
-        if (amountRaised >= softCap){
+    function checkGoalReached() afterDeadline 
+    {
+        if (amountRaised >= softCap)
+        {
             softCapReached = true;
             GoalReached(beneficiary, amountRaised);
         }
@@ -57,14 +59,20 @@ contract MoonFundingRound3 {
 
     //If soft cap and time limit have been reached, sends the funds to Moon Funding's wallet.
     //If soft cap has not been reached, refund users.
-    function safeWithdrawal() afterDeadline {
-        if (!softCapReached) {
+    function safeWithdrawal() afterDeadline 
+    {
+        if (!softCapReached) 
+        {
             uint amount = balanceOf[msg.sender];
             balanceOf[msg.sender] = 0;
-            if (amount > 0) {
-                if (msg.sender.send(amount)) {
+            if (amount > 0) 
+            {
+                if (msg.sender.send(amount)) 
+                {
                     FundTransfer(msg.sender, amount, false);
-                } else {
+                } 
+                else 
+                {
                     balanceOf[msg.sender] = amount;
                 }
             }
