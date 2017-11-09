@@ -1,6 +1,6 @@
 # Moon Funding's ICO
 
-Moon Funding's ICO is divided into 10 rounds. The higher the round, the higher the price.
+Moon Funding's ICO is divided into 10 rounds.
 
 Rounds 1 and 2 are available only to investors who booked a place in our whitelist.
 Rounds 3-10 are available to everyone.
