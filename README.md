@@ -4,7 +4,7 @@ Moon Funding's ICO is divided into 10 rounds. The higher the round, the higher t
 
 Rounds 1 and 2 are available only to investors who booked a place in our whitelist.
 Rounds 3-10 are available to everyone.
-Rounds 3-10 use a copy of the same smart contract, with different values.
+Rounds 3-10 use a copy of the same smart contract, with different values. Meaning there will be a different smart contract for each round, but the code will be the same.
 
 Round 1
 * Soft Cap: 2,8ETH
