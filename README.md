@@ -34,7 +34,7 @@ Round 5
 Round 6
 * Soft Cap: 0ETH
 * Hard Cap: 550ETH
-* Price:
+* Price: 12 000 // 1ETH = 12 000MF
 
 Round 7
 * Soft Cap: 0ETH
