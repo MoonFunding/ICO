@@ -24,7 +24,7 @@ Round 3
 Round 4
 * Soft Cap: 0ETH
 * Hard Cap: 200ETH
-* Price: 15 000
+* Price: 15 000 // 1ETH = 15 000MF
 
 Round 5
 * Soft Cap: 0ETH
