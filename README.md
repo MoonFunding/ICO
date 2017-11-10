@@ -6,6 +6,8 @@ Rounds 1 and 2 are available only to investors who booked a place in our whiteli
 Rounds 3-10 are available to everyone.
 Rounds 3-10 use a copy of the same smart contract, with different values. Meaning there will be a different smart contract for each round, but the code will be the same.
 
+This smart contract has been successfully tested on the "private test network" in the official Ethereum Wallet.
+
 Round 1
 * Soft Cap: 2,8ETH
 * Hard Cap: 2,8ETH
