@@ -1,60 +1,13 @@
 # Moon Funding's ICO
 
 Moon Funding's ICO is divided into 10 rounds.
+First 2 rounds were sold in December to Whitelist Members. Now, we'll start the ICO with Round 3 and a 50% bonus
 
-Rounds 1 and 2 are available only to investors who booked a place in our whitelist.
-Rounds 3-10 are available to everyone.
-Rounds 3-10 use a copy of the same smart contract, with different values. Meaning there will be a different smart contract for each round, but the code will be the same.
-
-This smart contract has been successfully tested on the "private test network" in the official Ethereum Wallet.
-
-Round 1
-* Soft Cap: 2,8ETH
-* Hard Cap: 2,8ETH
-* Price: 200 000 // 1ETH = 200 000MF
-
-Round 2
-* Soft Cap: 12ETH
-* Hard Cap: 12ETH
-* Price: 100 000 // 1ETH = 100 000MF
-
-Round 3
-* Soft Cap: 35ETH
-* Hard Cap: 82ETH
-* Price: 20 000 // 1ETH = 20 000MF
-
-Round 4
-* Soft Cap: 0ETH
-* Hard Cap: 200ETH
-* Price: 15 000 // 1ETH = 15 000MF
-
-Round 5
-* Soft Cap: 0ETH
-* Hard Cap: 376,923076923ETH
-* Price: 13 000 // 1ETH = 13 000MF
-
-Round 6
-* Soft Cap: 0ETH
-* Hard Cap: 550ETH
-* Price: 12 000 // 1ETH = 12 000MF
-
-Round 7
-* Soft Cap: 0ETH
-* Hard Cap: 478,2608695652ETH
-* Price: 11 500 // 1ETH = 11 500MF
-
-Round 8
-* Soft Cap: 0ETH
-* Hard Cap: 445,4545454545ETH
-* Price: 11 000 // 1ETH = 11 000MF
-
-Round 9
-* Soft Cap: 0ETH
-* Hard Cap: 285,7142857142ETH
-* Price: 10 500 // 1ETH = 10 500MF
-
-Round 10
-* Soft Cap: 0ETH
-* Hard Cap: 170ETH
-* Price: 10 000 // 1ETH = 10 000MF
-
+Round 3: 50% Bonus 
+Round 4: 33.33% Bonus
+Round 5: 23% Bonus 
+Round 6: 17% Bonus 
+Round 7: 13% Bonus 
+Round 8: 9% Bonus 
+Round 9: 5% Bonus 
+Round 10:  
