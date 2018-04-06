@@ -1,92 +1,99 @@
+
 pragma solidity ^0.4.16;
 
-interface token 
-{
-    function transfer(address receiver, uint amount);
+interface token {
+    function transfer(address receiver, uint amount) external;
 }
 
-contract MoonFundingRound3 {
+contract Crowdsale {
     address public beneficiary;
-    uint public softCap;
+    uint public fundingGoal;
     uint public amountRaised;
     uint public deadline;
     uint public price;
     token public tokenReward;
     mapping(address => uint256) public balanceOf;
-    bool softCapReached = false;
+    bool fundingGoalReached = false;
     bool crowdsaleClosed = false;
 
     event GoalReached(address recipient, uint totalAmountRaised);
     event FundTransfer(address backer, uint amount, bool isContribution);
-    
-    function MoonFundingRound3
-    (
+
+    /**
+     * Constructor function
+     *
+     * Setup the owner
+     */
+    function Crowdsale(
         address ifSuccessfulSendTo,
-        uint softCapInEthers,
+        uint fundingGoalInEthers,
         uint durationInMinutes,
         uint etherCostOfEachToken,
         address addressOfTokenUsedAsReward
-    ) 
-    {
+    ) public {
         beneficiary = ifSuccessfulSendTo;
-        softCap = softCapInEthers * 1 ether;
+        fundingGoal = fundingGoalInEthers * 1 ether;
         deadline = now + durationInMinutes * 1 minutes;
-        price = etherCostOfEachToken;
+        price = etherCostOfEachToken * 1 ether;
         tokenReward = token(addressOfTokenUsedAsReward);
     }
-    
-    function () payable 
-    {
+
+    /**
+     * Fallback function
+     *
+     * The function without name is the default function that is called whenever anyone sends funds to a contract
+     */
+    function () payable public {
         require(!crowdsaleClosed);
         uint amount = msg.value;
         balanceOf[msg.sender] += amount;
         amountRaised += amount;
-        tokenReward.transfer(msg.sender, amount * price);
-        FundTransfer(msg.sender, amount, true);
+        tokenReward.transfer(msg.sender, amount / price);
+        emit FundTransfer(msg.sender, amount, true);
     }
 
     modifier afterDeadline() { if (now >= deadline) _; }
 
-    function checkGoalReached() afterDeadline 
-    {
-        if (amountRaised >= softCap)
-        {
-            softCapReached = true;
-            GoalReached(beneficiary, amountRaised);
+    /**
+     * Check if goal was reached
+     *
+     * Checks if the goal or time limit has been reached and ends the campaign
+     */
+    function checkGoalReached() afterDeadline public {
+        if (amountRaised >= fundingGoal){
+            fundingGoalReached = true;
+            emit GoalReached(beneficiary, amountRaised);
         }
         crowdsaleClosed = true;
     }
 
 
-    //If soft cap and time limit have been reached, sends the funds to Moon Funding's wallet.
-    //If soft cap has not been reached, refund users.
-    function safeWithdrawal() afterDeadline 
-    {
-        if (!softCapReached) 
-        {
+    /**
+     * Withdraw the funds
+     *
+     * Checks to see if goal or time limit has been reached, and if so, and the funding goal was reached,
+     * sends the entire amount to the beneficiary. If goal was not reached, each contributor can withdraw
+     * the amount they contributed.
+     */
+    function safeWithdrawal() afterDeadline public {
+        if (!fundingGoalReached) {
             uint amount = balanceOf[msg.sender];
             balanceOf[msg.sender] = 0;
-            if (amount > 0) 
-            {
-                if (msg.sender.send(amount)) 
-                {
-                    FundTransfer(msg.sender, amount, false);
-                } 
-                else 
-                {
+            if (amount > 0) {
+                if (msg.sender.send(amount)) {
+                    emit FundTransfer(msg.sender, amount, false);
+                } else {
                     balanceOf[msg.sender] = amount;
                 }
             }
         }
 
-        if (softCapReached && beneficiary == msg.sender) {
+        if (fundingGoalReached && beneficiary == msg.sender) {
             if (beneficiary.send(amountRaised)) {
-                FundTransfer(beneficiary, amountRaised, false);
-            } 
-            else 
-            {
-                //If we fail to send the funds to beneficiary, unlock investors balance
-                softCapReached = false;
+                emit FundTransfer(beneficiary, amountRaised, false);
+            } else {
+                //If we fail to send the funds to beneficiary, unlock funders balance
+                fundingGoalReached = false;
             }
         }
     }
