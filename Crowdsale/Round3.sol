@@ -1,4 +1,3 @@
-
 pragma solidity ^0.4.16;
 
 interface token {
@@ -34,7 +33,7 @@ contract Crowdsale {
         beneficiary = ifSuccessfulSendTo;
         fundingGoal = fundingGoalInEthers * 1 ether;
         deadline = now + durationInMinutes * 1 minutes;
-        price = etherCostOfEachToken * 1 ether;
+        price = etherCostOfEachToken;
         tokenReward = token(addressOfTokenUsedAsReward);
     }
 
