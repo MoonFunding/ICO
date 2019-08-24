@@ -1,13 +1,12 @@
 # Moon Funding's ICO
 
-Moon Funding's ICO is divided into 10 rounds.
-First 2 rounds were sold in December to Whitelist Members. Now, we'll start the ICO with Round 3 and a 50% bonus
+## Description
+Decentralized crowdfunding Smart Contract based in Ethereum Blockchain in Solidity programming language.
 
-Round 3: 50% Bonus 
-Round 4: 33.33% Bonus
-Round 5: 23% Bonus 
-Round 6: 17% Bonus 
-Round 7: 13% Bonus 
-Round 8: 9% Bonus 
-Round 9: 5% Bonus 
-Round 10:  
+This is a crowdsale smart contract script that receives ETH cryptocurrency for a determined period of time, and then sends MF Tokens to users who bought them.
+
+Parameters:
+* FundingGoal //Minimum amount that must be received to succeed. If it's not reached, funds are returned to investors.
+* Deadline //Initial Coin Offering (ICO) deadline
+* Price //Rate at which MF/ETH are exchanged by the smart contract
+* TokenReward //Token that will be sent to investors. We'll be using MF 
